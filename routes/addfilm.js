@@ -6,10 +6,10 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/filmList';
 
-var insertDocument = function(db, callback) {
+var insertDocument = function(db, time, name, starA, starB, link, image, callback) {
    db.collection('restaurants').insertOne( {
-      "time": (new Date()).getTime(),   // 看的时间, 如果为空则代表想要看.
-      "name": "窃听风暴 Das Leben der Anderen (2006)",
+      "time": time,   // 看的时间, 如果为空则代表想要看.
+      "name": name,
       "starA": 5,
       "startB": 4,
       "url": "http://movie.douban.com/subject/1900841/",
@@ -23,11 +23,24 @@ var insertDocument = function(db, callback) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('{"err": "method not supported."}');
+});
+
+/* POST users listing. */
+router.post('/', function(req, res, next) {
+  var time = (new Date()).getTime();
+  var name = "窃听风暴";
+  var starA = 5;
+  var starB = 4;
+  var link = "http://movie.douban.com/subject/1900841/";
+  var image = "http://img4.douban.com/view/photo/photo/public/p1808851998.jpg";
+  
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
-    insertDocument(db, function() {
+    insertDocument(db, time, name, starA, starB, link, image, function() {
         db.close();
+        var retmsg = '{"msg": "insert ' + name + ' success!"}';
+        res.send(retmsg);
     });
   });
 });

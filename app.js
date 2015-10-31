@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var addfilm = require('./routes/addfilm');
 
 var app = express();
 
@@ -24,12 +25,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/addfilm', addfilm);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
+});
+
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var mongoUrl = 'mongodb://localhost:27017/test';
+MongoClient.connect(mongoUrl, function(err, db) { // 测试数据库连接
+  assert.equal(null, err);
+  console.log("Connected correctly to server.");
+  db.close();
 });
 
 // error handlers
