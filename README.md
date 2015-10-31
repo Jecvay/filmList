@@ -7,10 +7,12 @@ filmList 是一个记录看过的电影以及想看的电影的小应用. 同时
 ## API
 
 读取权限:
+
 	- 获取已看电影列表		GET http://domain.com/api/watchedlist
 	- 获取想要看的电影列表	GET http://domain.com/api/wantlist
 
 写入权限:
+
 	- 直接添加已看电影		POST http://domain.com/api/watchedlist
 	- 直接添加想要看的电影		POST http://domain.com/api/wantlist
 	- 将指定的想要看的电影标记为已看电影		PUT http://domain.com/api/wantlist
