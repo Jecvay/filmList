@@ -20,12 +20,12 @@ POST 的发送和接收数据, 以及接收到的数据, 都使用 json 进行, 
 
 ```json
 	{
-		"id": 23,			// 在添加记录的时候, 该字段无需填写, 由后台处理. 在标记电影的时候, 需要填写.
+		"id": 23,			//在添加记录的时候,该字段无需填写,由后台处理.在标记电影的时候,需要填写.
 		"name": "窃听风暴",
 		"time": 1446283572077,
 		"starA": 5,
 		"starB": 4,
-		"url": "http://movie.douban.com/subject/1900841/",	// 点击跳转链接
-		"image": "http://img4.douban.com/view/photo/photo/public/p1808851998.jpg"		// 电影海报图片
+		"url": "http://movie.douban.com/subject/1900841/",	//点击跳转链接
+		"image": "http://img4.douban.com/view/photo/photo/public/p1808851998.jpg"		//电影海报图片
 	}
 ```
