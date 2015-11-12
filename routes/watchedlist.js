@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var assert = require('assert');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Jecvay FilmList' , haha: "Niubi"});
-});
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+var url = 'mongodb://localhost:27017/filmList';
 
 // 查询电影列表
 var queryDocument = function(db, res, callback) {
@@ -39,7 +38,7 @@ var insertDocument = function(db, time, name, starA, starB, link, image, callbac
 };
 
 /* GET users listing. */
-router.get('/api/watchedlist', function(req, res, next) {
+router.get('/', function(req, res, next) {
   var db = req.db;
   var collection = db.get('watched');
   collection.find({}, {}, function(e, docs) {
@@ -48,50 +47,32 @@ router.get('/api/watchedlist', function(req, res, next) {
 });
 
 /* POST users listing. */
-router.post('/api/watchedlist', function(req, res, next) {
+router.post('/', function(req, res, next) {
+  // var time = (new Date()).getTime();
+  // var name = "窃听风暴";
+  // var starA = 5;
+  // var starB = 4;
+  // var link = "http://movie.douban.com/subject/1900841/";
+  // var image = "http://img4.douban.com/view/photo/photo/public/p1808851998.jpg";
+  
   var db = req.db;
   var collection = db.get('watched');
   var body = req.body
-  var errmsg;
+  var para = req.params;
+  console.dir(body);
+  console.log("haha:" + para + para.name);
+  console.log(body.name);
+  res.send("ok");
   
-  var time = (new Date()).getTime();
-  var name = body.name;
-  var starA = body.starA;
-  var starB = body.starB;
-  var link = body.link;
-  var image = body.image;
   
-  if (body.time) {
-    time = body.time;
-  }
-  
-  if (!name) errmsg = "need name";
-  if (!starA) errmsg = "need starA";
-  if (!starB) errmsg = "need starB";
-  if (!link) errmsg = "need link";
-  if (!image) errmsg = "need image";
-  
-  if (errmsg) {
-    res.send('{"err": '+ errmsg +'}')
-    console.log(errmsg);
-  } else {
-    // 插入数据库
-    collection.insert({
-      "time": time,
-      "name": name,
-      "starA": starA,
-      "starB": starB,
-      "link": link,
-      "image": image
-    }, function(err, doc) {
-      if (err) {
-        res.send('{"err": "Something wrong when writing into mongodb."}');
-      } else {
-        res.send('{"msg": "insert '+ name + ' ok"}');
-      }
-    });
-  }
+  // MongoClient.connect(url, function(err, db) {
+  //   assert.equal(null, err);
+  //   insertDocument(db, time, name, starA, starB, link, image, function() {
+  //       db.close();
+  //       var retmsg = '{"msg": "insert ' + name + ' success!"}';
+  //       res.send(retmsg);
+  //   });
+  // });
 });
-
 
 module.exports = router;

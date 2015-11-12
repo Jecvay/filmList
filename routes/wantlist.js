@@ -7,7 +7,7 @@ var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/filmList';
 
 var insertDocument = function(db, time, name, starA, starB, link, image, callback) {
-   db.collection('restaurants').insertOne( {
+   db.collection('watched').insertOne( {
       "time": time,   // 看的时间, 如果为空则代表想要看.
       "name": name,
       "starA": 5,
@@ -16,7 +16,7 @@ var insertDocument = function(db, time, name, starA, starB, link, image, callbac
       "image": "http://img4.douban.com/view/photo/photo/public/p1808851998.jpg"
    }, function(err, result) {
     assert.equal(err, null);
-    console.log("Inserted a document into the restaurants collection.");
+    console.log("Inserted a document into the watched collection.");
     callback(result);
   });
 };

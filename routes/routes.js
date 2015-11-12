@@ -49,48 +49,24 @@ router.get('/api/watchedlist', function(req, res, next) {
 
 /* POST users listing. */
 router.post('/api/watchedlist', function(req, res, next) {
+  var time = (new Date()).getTime();
+  // var name = "窃听风暴";
+  // var starA = 5;
+  // var starB = 4;
+  // var link = "http://movie.douban.com/subject/1900841/";
+  // var image = "http://img4.douban.com/view/photo/photo/public/p1808851998.jpg";
+  
   var db = req.db;
   var collection = db.get('watched');
   var body = req.body
-  var errmsg;
-  
-  var time = (new Date()).getTime();
-  var name = body.name;
-  var starA = body.starA;
-  var starB = body.starB;
-  var link = body.link;
-  var image = body.image;
   
   if (body.time) {
     time = body.time;
   }
   
-  if (!name) errmsg = "need name";
-  if (!starA) errmsg = "need starA";
-  if (!starB) errmsg = "need starB";
-  if (!link) errmsg = "need link";
-  if (!image) errmsg = "need image";
-  
-  if (errmsg) {
-    res.send('{"err": '+ errmsg +'}')
-    console.log(errmsg);
-  } else {
-    // 插入数据库
-    collection.insert({
-      "time": time,
-      "name": name,
-      "starA": starA,
-      "starB": starB,
-      "link": link,
-      "image": image
-    }, function(err, doc) {
-      if (err) {
-        res.send('{"err": "Something wrong when writing into mongodb."}');
-      } else {
-        res.send('{"msg": "insert '+ name + ' ok"}');
-      }
-    });
-  }
+  console.log(time);
+  res.send("ok");
+
 });
 
 
